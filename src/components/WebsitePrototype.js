@@ -13,9 +13,9 @@ const WebsitePrototype = () => {
         const script = document.createElement('script');
         script.src = 'https://github.com/Cognigy/Webchat/releases/latest/download/webchat.js';
         script.async = true;
-        script.onload = () => {
+        script.onload = async () => {
             // Initialize webchat with your endpoint
-            window.initWebchat(
+            window.cognigyWebchat = await window.initWebchat(
                 "https://endpoint-trial.cognigy.ai/df60489eae7284806876c8ddf1a4aa3c1b03ed2a6672610f3ece7ea167298492"
             );
         };
@@ -37,9 +37,11 @@ const WebsitePrototype = () => {
 
     // Initialize chat and send error context
     const initChat = () => {
+        console.log("Init chat")
         setShowChat(true);
         // Send error context to Cognigy
         if (window.cognigyWebchat) {
+            console.log("Sent error message")
             window.cognigyWebchat.sendMessage({
                 text: "Error encountered",
                 data: {
